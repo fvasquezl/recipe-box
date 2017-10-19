@@ -12,7 +12,7 @@ export default {
     setError(message){
         this.state.error = message;
         setTimeout(()=>{
-            this
+            this.removeError()
         },10000)
     },
     removeSuccess(){
@@ -21,8 +21,4 @@ export default {
     removeError(){
         this.state.error = null
     }
-
-
-
-
 }

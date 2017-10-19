@@ -141,5 +141,38 @@ image{
     border:1px solid #e57373;
     color: #b71c1c
   }
+}
+
+.recipe{
+  &__header {
+    box-shadow: rgba(0,0,0,0.09) 0 1px 0;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: 10px;
+  }
+  &__list{
+    width: 960px;
+    margin: 0 auto;
+    padding-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item{
+    width: 33.33%;
+  }
+  &__inner {
+    display: block;
+    box-shadow: rgba(0,0,0,0.09) 0 1px 0;
+    background: #fff;
+    margin: 10px;
+  }
+  &__name{
+    padding: 10px;
+    margin: 0px;
+  }
+
 
 }

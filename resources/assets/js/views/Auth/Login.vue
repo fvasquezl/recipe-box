@@ -1,11 +1,6 @@
 <template>
-    <form class="form" @submit.prevent="register">
-        <h1 class="form__title">Create An Account</h1>
-        <div class="form__group">
-            <label>Name</label>
-            <input type="text" class="form__control" v-model="form.name">
-            <small class="error__control" v-if="error.name">{{error.name[0]}}</small>
-        </div>
+    <form class="form" @submit.prevent="login">
+        <h1 class="form__title">Welcome back!</h1>
         <div class="form__group">
             <label>Email</label>
             <input type="text" class="form__control" v-model="form.email">
@@ -17,12 +12,8 @@
             <small class="error__control" v-if="error.password">{{error.password[0]}}</small>
         </div>
         <div class="form__group">
-            <label>Confirm Password</label>
-            <input type="password" class="form__control" v-model="form.password_confirmation">
-        </div>
-        <div class="form__group">
             <button :disabled="isProcessing" class="btn btn__primary">
-                Register
+                Login
             </button>
         </div>
     </form>
@@ -31,29 +22,29 @@
 
 <script type="text/javascript">
     import Flash from '../../helpers/flash'
-    import { post} from '../../helpers/api'
+    import Auth from '../../store/auth'
+    import { post } from '../../helpers/api'
     export default{
         data() {
             return{
                 form: {
-                    name:'',
                     email:'',
                     password:'',
-                    password_confirmation:''
                 },
                 error:{},
                 isProcessing:false
             }
         },
         methods:{
-            register(){
+            login(){
                 this.isProcessing = true;
                 this.error = {};
-                post(`/api/register`, this.form)
+                post(`/api/login`, this.form)
                     .then((res) =>{
-                        if(res.data.registered){
-                            Flash.setSuccess('You have successfully create an Account!')
-                            this.$router.push('/login')
+                        if(res.data.authenticated){
+                            Auth.set(res.data.api_token, res.data.user_id);
+                            Flash.setSuccess('You have successfully logged In!');
+                            this.$router.push('/')
                         }
                         this.isProcessing=false
                     })

@@ -35,9 +35,10 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
         $this->validate($request,[
             'email'=> 'required|email',
-            'password' => 'required|between:6:25'
+            'password' => 'required|between:6,25'
         ]);
 
         $user = User::query()->where('email', $request->email)->first();
@@ -57,6 +58,16 @@ class AuthController extends Controller
             ->json([
                 'email' => ['Provided email and password does not match!'],
             ],422);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->api_token = null;
+        $user->save();
+
+        return response()
+            ->json(['logged_out'=> true]);
     }
 
 }
