@@ -15,7 +15,7 @@ a{
   color: #616161;
 }
 
-image{
+img{
   display: block;
   width: 100%;
 }
@@ -240,5 +240,23 @@ image{
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
+  }
+}
+.image{
+  &__upload{
+    height: 257px;
+    background: #fafafa;
+    border: 1px dashed rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__preview{
+    position: relative;
+  }
+  &__close{
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }

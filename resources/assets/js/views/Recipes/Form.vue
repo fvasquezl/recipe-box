@@ -51,8 +51,8 @@
                         <button class="btn btn__danger" @click="remove('ingredients',index)">
                             &times;
                         </button>
-                        <button class="btn" @click="addIngredient">Add Ingredient</button>
                     </div>
+                    <button class="btn" @click="addIngredient">Add Ingredient</button>
                 </div>
             </div>
             <div class="recipe__directions">
@@ -65,8 +65,8 @@
                         <button class="btn btn__danger" @click="remove('directions',index)">
                             &times;
                         </button>
-                        <button class="btn" @click="addDirection">Add Direction</button>
                     </div>
+                    <button class="btn" @click="addDirection">Add Direction</button>
                 </div>
             </div>
         </div>
@@ -77,6 +77,7 @@
     import Vue from 'vue'
     import Flash from '../../helpers/flash'
     import {get,post} from '../../helpers/api'
+    import{toMultipartedForm} from '../../helpers/form.js'
     import ImageUpload from '../../components/ImageUpload.vue'
     export default {
         components:{
@@ -108,7 +109,22 @@
         },
         methods:{
             save(){
+                this.isProcessing = true;
+                const form = toMultipartedForm(this.form, this.$route.meta.mode);
+                post(this.storeURL,form)
+                    .then((res)=>{
+                        if(res.data.saved){
+                            Flash.setSuccess(res.data.message);
+                            this.$router.push(`/recipes/${res.data.id}`);
+                        }
+                    })
+                    .catch((err)=>{
 
+                    if(err.response.status === 422){
+                        this.error = err.response.data.errors
+                    }
+                    this.isProcessing=false
+                    })
             },
             addDirection(){
                 this.form.directions.push({description:''})

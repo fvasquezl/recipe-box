@@ -5,11 +5,14 @@
                 <router-link to="/">Recipe Box</router-link>
             </div>
             <ul class="navbar__list">
-                <li class="navbar__item">
-                    <router-link to="/login" v-if="!check">LOGIN</router-link>
+                <li class="navbar__item" v-if="!check">
+                    <router-link to="/login">LOGIN</router-link>
                 </li>
-                 <li class="navbar__item">
-                    <router-link to="/register" v-if="!check">REGISTER</router-link>
+                 <li class="navbar__item" v-if="!check">
+                    <router-link to="/register" >REGISTER</router-link>
+                </li>
+                <li class="navbar__item" v-if="check">
+                    <router-link to="/recipes/create" >CREATE RECIPE</router-link>
                 </li>
                  <li class="navbar__item" v-if="check">
                      <a @click.stop="logout">LOGOUT</a>

@@ -127,13 +127,13 @@ class RecipeController extends Controller
         $this->validate($request,[
             'name' => 'required|max:255',
             'description' => 'required|max:3000',
-            'image' =>'required|image',
+            'image' =>'image',
             'ingredients' => 'required|array|min:1',
-            'ingredients.*.id' => 'required|exists:recipe_ingredients',
+            'ingredients.*.id' => 'integer|exists:recipe_ingredients',
             'ingredients.*.name' => 'required|max:255',
             'ingredients.*.qty' => 'required|max:255',
             'directions' => 'required|array|min:1',
-            'directions.*.id' => 'required|exists:recipe_directions',
+            'directions.*.id' => 'integer|exists:recipe_directions',
             'directions.*.description' => 'required|max:3000'
         ]);
 
@@ -198,7 +198,7 @@ class RecipeController extends Controller
             $recipe->ingredients()->saveMany($ingredients);
         }
         if(count($directions)){
-            $recipe->$directions()->saveMany($directions);
+            $recipe->directions()->saveMany($directions);
         }
 
         return response()
